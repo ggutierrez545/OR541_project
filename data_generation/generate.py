@@ -44,4 +44,9 @@ with open("data_generation/raw/personnel.csv", 'r') as data:
             peep.add_skills(generate_item(skills))
         personnel.append(peep)
 
-
+bin = []
+with open("data_generation/raw/bin.csv", 'r') as data:
+    reader = csv.reader(data)
+    header = next(reader)
+    for billet in reader:
+        bin.append(billet[0])
