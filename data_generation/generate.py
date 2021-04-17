@@ -1,6 +1,8 @@
 from numpy import random as rd
 import csv
 from data_generation.person import Person
+from data_generation.billet import Billet
+from data_generation.UIC import Unit
 
 
 def generate_item(data_list):
@@ -47,11 +49,25 @@ def generate_data(random_seed=541):
                 peep.add_skills(generate_item(skills))
             personnel.append(peep)
 
+    units = []
+    with open("data_generation/raw/unit.csv", 'r') as data:
+        reader = csv.reader(data)
+        header = next(reader)
+        for row in reader:
+            uic = row[0]
+            units.append(Unit(uic))
+
     bins = []
     with open("data_generation/raw/bin.csv", 'r') as data:
         reader = csv.reader(data)
         header = next(reader)
-        for billet in reader:
-            bins.append(billet[0])
+        for row in reader:
+            billet = Billet(row[0])
+            billet.grade = generate_item(grades)
+            billet.add_specialty(generate_item(specialties))
+            for _ in range(rd.randint(0, 2)):
+                billet.add_skills(generate_item(skills))
+            bins.append(billet)
+            generate_item(units).assign_billet(billet)
 
-    return personnel, specialties, skills, grades, bins
+    return personnel, specialties, skills, grades, units, bins
