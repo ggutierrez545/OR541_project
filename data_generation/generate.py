@@ -14,9 +14,20 @@ def generate_data(random_seed=541):
     # Set random seed for reproducibility.
     rd.seed(random_seed)
 
+    grades = []
+    with open("data_generation/raw/grade.csv", 'r') as data:
+        reader = csv.reader(data)
+        header = next(reader)
+        for grade in reader:
+            grades.append(grade[0])
+
     specialties = []
     with open("data_generation/raw/specialty.csv", 'r') as data:
-        reader = csv.reader(data)
+        enlisted = set(['E1','E2','E3','E4','E5','E6','E7','E8','E9'])
+        if (grade[0] in enlisted):
+            reader = csv.reader(data[0,99])
+        else:
+            reader = csv.reader(data[100,199])
         header = next(reader)
         for specialty in reader:
             specialties.append(specialty[0])
@@ -28,12 +39,6 @@ def generate_data(random_seed=541):
         for skill in reader:
             skills.append(skill[0])
 
-    grades = []
-    with open("data_generation/raw/grade.csv", 'r') as data:
-        reader = csv.reader(data)
-        header = next(reader)
-        for grade in reader:
-            grades.append(grade[0])
 
     personnel = []
     with open("data_generation/raw/personnel.csv", 'r') as data:
