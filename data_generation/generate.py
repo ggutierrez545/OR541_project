@@ -23,11 +23,6 @@ def generate_data(random_seed=541):
 
     specialties = []
     with open("data_generation/raw/specialty.csv", 'r') as data:
-        enlisted = set(['E1','E2','E3','E4','E5','E6','E7','E8','E9'])
-        if (grade[0] in enlisted):
-            reader = csv.reader(data[0,99])
-        else:
-            reader = csv.reader(data[100,199])
         header = next(reader)
         for specialty in reader:
             specialties.append(specialty[0])
@@ -39,17 +34,21 @@ def generate_data(random_seed=541):
         for skill in reader:
             skills.append(skill[0])
 
-
     personnel = []
     with open("data_generation/raw/personnel.csv", 'r') as data:
+        enlisted = ['E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7', 'E8', 'E9']
         reader = csv.reader(data)
         header = next(reader)
         for row in reader:
             edipi = row[0]
             peep = Person(edipi)
             peep.grade = generate_item(grades)
-            for _ in range(rd.randint(1, 4)):
-                peep.add_specialty(generate_item(specialties))
+            if peep.grade in enlisted:
+                for _ in range(rd.randint(1, 4)):
+                    peep.add_specialty(generate_item(specialties[:100]))
+            else:
+                for _ in range(rd.randint(1, 4)):
+                    peep.add_specialty(generate_item(specialties[100:]))
             for _ in range(rd.randint(0, 5)):
                 peep.add_skills(generate_item(skills))
             skills_count_personnel = len(skills)
