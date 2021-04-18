@@ -64,12 +64,18 @@ def generate_data(random_seed=541):
 
     bins = []
     with open("data_generation/raw/bin.csv", 'r') as data:
+        enlisted = ['E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7', 'E8', 'E9']
         reader = csv.reader(data)
         header = next(reader)
         for row in reader:
             billet = Billet(row[0])
             billet.grade = generate_item(grades)
-            billet.add_specialty(generate_item(specialties))
+            if billet.grade in enlisted:
+                for _ in range(rd.randint(1, 4)):
+                    billet.add_specialty(generate_item(specialties[:100]))
+            else:
+                for _ in range(rd.randint(1, 4)):
+                    billet.add_specialty(generate_item(specialties[100:]))
             for _ in range(rd.randint(0, 2)):
                 billet.add_skills(generate_item(skills))
             skills_count_billet = len(skills)
