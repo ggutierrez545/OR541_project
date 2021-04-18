@@ -52,6 +52,7 @@ def generate_data(random_seed=541):
                 peep.add_specialty(generate_item(specialties))
             for _ in range(rd.randint(0, 5)):
                 peep.add_skills(generate_item(skills))
+            skills_count_personnel = len(skills)
             personnel.append(peep)
 
     units = []
@@ -72,6 +73,7 @@ def generate_data(random_seed=541):
             billet.add_specialty(generate_item(specialties))
             for _ in range(rd.randint(0, 2)):
                 billet.add_skills(generate_item(skills))
+            skills_count_billet = len(skills)
             bins.append(billet)
             generate_item(units).assign_billet(billet)
 

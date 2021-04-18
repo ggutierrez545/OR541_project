@@ -15,3 +15,4 @@ class Billet(object):
 
     def list_attributes(self):
         return [self.bin, self.grade, self.specialty, self.skills]
+
