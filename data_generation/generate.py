@@ -23,6 +23,7 @@ def generate_data(random_seed=541):
 
     specialties = []
     with open("data_generation/raw/specialty.csv", 'r') as data:
+        reader = csv.reader(data)
         header = next(reader)
         for specialty in reader:
             specialties.append(specialty[0])
