@@ -6,6 +6,14 @@ class Person(object):
         self.specialties = []
         self.skills = []
 
+    @property
+    def num_skills_person(self):
+        return len(self.skills)
+
+    @property
+    def num_specialties_person(self):
+        return len(self.specialties)
+
     def add_specialty(self, specialty):
         if specialty not in self.specialties:
             self.specialties.append(specialty)

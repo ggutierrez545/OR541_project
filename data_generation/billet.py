@@ -6,6 +6,14 @@ class Billet(object):
         self.specialty = None
         self.skills = []
 
+    @property
+    def num_skills_billet(self):
+        return len(self.skills)
+
+    @property
+    def num_specialties_billet(self):
+        return len(self.skills)
+
     def add_specialty(self, specialty):
         self.specialty = specialty
 
