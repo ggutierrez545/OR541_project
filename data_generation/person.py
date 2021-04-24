@@ -4,6 +4,7 @@ class Person(object):
         self.edipi = edipi
         self.grade = None
         self.specialties = []
+        self.ranked_billets = []
         self.skills = []
 
     def add_specialty(self, specialty):

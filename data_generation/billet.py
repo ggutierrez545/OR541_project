@@ -4,7 +4,14 @@ class Billet(object):
         self.bin = bin
         self.grade = None
         self.specialty = None
+        self.ranked_personnel = []
         self.skills = []
+
+    @property
+    def grade_subs_pool(self):
+        o_e, level = self.grade
+        level = int(level)
+        return [f'{o_e}{lvl}' for lvl in range(level-1, level+2)]
 
     def add_specialty(self, specialty):
         self.specialty = specialty

@@ -83,4 +83,46 @@ def generate_data(random_seed=541):
             bins.append(billet)
             generate_item(units).assign_billet(billet)
 
-    return personnel, specialties, skills, grades, units, bins
+    sorted_billets = {}
+    for billet in bins:
+        for grade in billet.grade_subs_pool:
+            try:
+                sorted_billet_spec = sorted_billets[billet.specialty]
+                try:
+                    sorted_billet_spec[grade].append(billet)
+                except KeyError:
+                    sorted_billet_spec[grade] = [billet]
+            except KeyError:
+                sorted_billets[billet.specialty] = {}
+
+    sorted_people = {}
+    for person in personnel:
+        for specialty in person.specialties:
+            try:
+                sorted_person_spec = sorted_people[specialty]
+                try:
+                    sorted_person_spec[person.grade].append(person)
+                except KeyError:
+                    sorted_person_spec[person.grade] = [person]
+            except KeyError:
+                sorted_people[specialty] = {}
+
+    for person in personnel:
+        for specialty in specialties:
+            try:
+                applicable_billets = sorted_billets[specialty][person.grade]
+                person.ranked_billets.extend(applicable_billets)
+            except KeyError:
+                continue
+        rd.shuffle(person.ranked_billets)
+
+    for billet in bins:
+        for grade in billet.grade_subs_pool:
+            try:
+                applicable_personnel = sorted_people[billet.specialty][grade]
+                billet.ranked_personnel.extend(applicable_personnel)
+            except KeyError:
+                continue
+        rd.shuffle(billet.ranked_personnel)
+
+    return personnel, specialties, skills, grades, units, bins, sorted_billets
