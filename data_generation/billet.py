@@ -13,6 +13,14 @@ class Billet(object):
         level = int(level)
         return [f'{o_e}{lvl}' for lvl in range(level-1, level+2)]
 
+    @property
+    def num_skills_billet(self):
+        return len(self.skills)
+
+    @property
+    def num_specialties_billet(self):
+        return len(self.skills)
+
     def add_specialty(self, specialty):
         self.specialty = specialty
 
